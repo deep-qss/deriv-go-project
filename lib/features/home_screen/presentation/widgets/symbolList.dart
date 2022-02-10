@@ -18,6 +18,8 @@ class ActiveSymbolList extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: ListView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
           itemCount: activeSymbol.length,
           itemBuilder: (BuildContext context, int index) => ListTile(
             leading: Text('${activeSymbol[index].symbol}'),

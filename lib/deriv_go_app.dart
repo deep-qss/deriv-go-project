@@ -54,8 +54,6 @@ class _DerivGoAppState extends State<DerivGoApp> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) => Scaffold(
         body: BlocProvider<conn_cubit.ConnectionCubit>.value(

@@ -6,7 +6,6 @@ import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart'
 
 ///select symbol widget
 class Symbols extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) =>
       BlocBuilder<ActiveSymbolCubit, ActiveSymbolState>(
@@ -22,28 +21,45 @@ class Symbols extends StatelessWidget {
                 child: Card(
                   child: BlocBuilder<ActiveSymbolCubit, ActiveSymbolState>(
                     builder: (BuildContext context, ActiveSymbolState state) =>
-                        ListTile(
-                      title: Text(
-                        ' Select Symbol: ${thisState.selectedSymbol?.symbol}',
-                      ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.expand_more),
-                        onPressed: () {
-                          final void Function(int index) _onChange =
-                              context.read<ActiveSymbolCubit>().selectSymbol;
+                        GestureDetector(
+                      onTap: () {
+                        final void Function(int index) _onChange =
+                            context.read<ActiveSymbolCubit>().selectSymbol;
 
-                          Navigator.push<dynamic>(
-                            context,
-                            MaterialPageRoute<dynamic>(
-                              builder: (BuildContext context) =>
-                                  ActiveSymbolList(
-                                activeSymbol:
-                                    thisState.activeSymbols ?? <ActiveSymbol>[],
-                                selectSymbol: _onChange,
-                              ),
+                        Navigator.push<dynamic>(
+                          context,
+                          MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) => ActiveSymbolList(
+                              activeSymbol:
+                                  thisState.activeSymbols ?? <ActiveSymbol>[],
+                              selectSymbol: _onChange,
                             ),
-                          );
-                        },
+                          ),
+                        );
+                      },
+                      child: ListTile(
+                        title: Text(
+                          ' Select Symbol: ${thisState.selectedSymbol?.symbol}',
+                        ),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.expand_more),
+                          onPressed: () {
+                            final void Function(int index) _onChange =
+                                context.read<ActiveSymbolCubit>().selectSymbol;
+
+                            Navigator.push<dynamic>(
+                              context,
+                              MaterialPageRoute<dynamic>(
+                                builder: (BuildContext context) =>
+                                    ActiveSymbolList(
+                                  activeSymbol: thisState.activeSymbols ??
+                                      <ActiveSymbol>[],
+                                  selectSymbol: _onChange,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -55,4 +71,3 @@ class Symbols extends StatelessWidget {
         },
       );
 }
-

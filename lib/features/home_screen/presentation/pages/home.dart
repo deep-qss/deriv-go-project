@@ -1,4 +1,3 @@
-import 'package:deriv_go/features/home_screen/presentation/widgets/symbol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,6 +5,7 @@ import '../../states/active_symbol/active_symbol_cubit.dart';
 import '../../states/available_contracts/available_contracts_cubit.dart';
 import '../widgets/contract_list.dart';
 import '../widgets/data_widget.dart';
+import '../widgets/symbol.dart';
 
 ///The home page of the app
 class HomeScreen extends StatelessWidget {
@@ -28,13 +28,16 @@ class HomeScreen extends StatelessWidget {
               create: (BuildContext context) =>
                   AvailableContractsCubit(context.read<ActiveSymbolCubit>()),
             ),
+            /*BlocProvider<TickCubit>(
+              create: (context) => TickCubit(context.read<ActiveSymbolCubit>()),
+            )*/
           ],
           child: ListView(
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             children: [
               Symbols(),
-              DataWidget(),
+              const DataWidget(),
               const AvailableContractList(),
             ],
           ),
