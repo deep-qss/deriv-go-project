@@ -38,6 +38,7 @@ dependencies:
     git:
       url: https://github.com/deriv-com/flutter-deriv-api.git
       ref: dev
+  bloc: ^7.2.1
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +50,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
+  deriv_lint:
+    git:
+      url: git@github.com:deep-qss/flutter-deriv-packages.git
+      path: packages/deriv_lint
+      ref: dev
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

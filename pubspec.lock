@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "2.8.2"
   bloc:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: bloc
       url: "https://pub.dartlang.org"
@@ -141,6 +141,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  deriv_lint:
+    dependency: "direct dev"
+    description:
+      path: "packages/deriv_lint"
+      ref: dev
+      resolved-ref: a38db914483d0af4a0366014bd574f4e998c9e26
+      url: "git@github.com:deep-qss/flutter-deriv-packages.git"
+    source: git
+    version: "1.0.0"
   device_info:
     dependency: transitive
     description:
