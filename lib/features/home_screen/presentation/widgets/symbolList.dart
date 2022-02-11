@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_deriv_api/api/common/active_symbols/active_symbols.dart';
 
-///
+/// List of ActiveSymbol
 class ActiveSymbolList extends StatelessWidget {
   ///constructor
   const ActiveSymbolList({
@@ -25,7 +25,6 @@ class ActiveSymbolList extends StatelessWidget {
             leading: Text('${activeSymbol[index].symbol}'),
             onTap: () {
               selectSymbol(index);
-              // context.read<ActiveSymbolCubit>().selectSymbol(index);
               Navigator.pop(context);
             },
           ),

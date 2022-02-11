@@ -9,9 +9,9 @@ import 'package:meta/meta.dart';
 
 part 'tick_state.dart';
 
-///
+/// Tick Cubit
 class TickCubit extends Cubit<TickState> {
-  ///
+  /// Initializer
   TickCubit(ActiveSymbolCubit activeSymbolCubit) : super(TicksLoading()) {
     activeSymbolCubit.stream
         .listen((ActiveSymbolState activeSymbolsState) async {
@@ -23,6 +23,8 @@ class TickCubit extends Cubit<TickState> {
     });
   }
 
+  /// for subscribe tick
+  /// [symbol] to update ticks for specified symbol
   Future<void> subscribeTicks(ActiveSymbol symbol) async {
     emit(TicksLoading());
 

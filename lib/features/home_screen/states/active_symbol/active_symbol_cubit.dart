@@ -6,9 +6,9 @@ import 'package:meta/meta.dart';
 
 part 'active_symbol_state.dart';
 
-///
+///To manage active symbols
 class ActiveSymbolCubit extends Cubit<ActiveSymbolState> {
-  /// ActiveSymbolCubit Initializer
+  /// Initializer
   ActiveSymbolCubit() : super(ActiveSymbolLoading());
 
   Future<List<ActiveSymbol>> _fetchActiveSymbols() async =>

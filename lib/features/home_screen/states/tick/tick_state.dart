@@ -1,19 +1,19 @@
 part of 'tick_cubit.dart';
 
-///
+/// tick state
 @immutable
 abstract class TickState {
-  ///
+  /// Initializes
   const TickState();
 }
 
-/// TicksLoading
+/// Ticks loading state
 class TicksLoading extends TickState {
   @override
   String toString() => 'TicksLoading...';
 }
 
-/// TicksError
+/// Ticks Error state
 class TickError extends TickState {
   /// Initializes
   const TickError({this.message});
@@ -25,7 +25,7 @@ class TickError extends TickState {
   String toString() => 'TicksError';
 }
 
-/// TicksLoaded
+/// Ticks Loaded state
 class TicksLoaded extends TickState {
   /// Initializes
   const TicksLoaded({this.tick});
@@ -35,16 +35,4 @@ class TicksLoaded extends TickState {
 
   @override
   String toString() => 'Tick $tick loaded';
-}
-
-///
-class YieldTick extends TickState {
-  /// Initializes
-  const YieldTick({this.tick});
-
-  /// Loaded tick
-  final Tick? tick;
-
-  @override
-  String toString() => 'YieldTicks $tick';
 }

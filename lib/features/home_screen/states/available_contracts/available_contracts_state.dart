@@ -1,25 +1,19 @@
 part of 'available_contracts_cubit.dart';
 
-///AvailableContractsState
+/// available contracts state
 @immutable
 abstract class AvailableContractsState {
   ///constructor
   const AvailableContractsState();
 }
 
-///Initial contracts
-class AvailableContractsInitial extends AvailableContractsState {
-  ///constructor
-  const AvailableContractsInitial();
-}
-
-/// contracts loading
+/// contracts loading state
 class AvailableContractsLoading extends AvailableContractsState {
   @override
   String toString() => 'AvailableContractsLoading...';
 }
 
-/// contracts loaded
+/// contracts loaded state
 class AvailableContractsLoaded extends AvailableContractsState {
   /// Initializes
   AvailableContractsLoaded({
@@ -28,7 +22,7 @@ class AvailableContractsLoaded extends AvailableContractsState {
   }) : _selectedContract =
             selectedContract ?? contracts?.availableContracts?.first;
 
-  /// variable declaration
+  /// variable declaration state
   final ContractsForSymbol? contracts;
   final AvailableContractModel? _selectedContract;
 
@@ -37,10 +31,11 @@ class AvailableContractsLoaded extends AvailableContractsState {
 
   @override
   String toString() =>
-      'AvailableContractsLoaded ${contracts!.availableContracts!.length} contracts';
+      'AvailableContractsLoaded ${contracts!.availableContracts!.length}'
+      ' contracts';
 }
 
-///contracts error
+///contracts error state
 class AvailableContractsError extends AvailableContractsState {
   /// Initializes
   const AvailableContractsError({this.message});
@@ -50,28 +45,4 @@ class AvailableContractsError extends AvailableContractsState {
 
   @override
   String toString() => 'AvailableContractsError';
-}
-
-/// SelectContract
-class SelectContract extends AvailableContractsState {
-  /// Initializes
-  const SelectContract({this.index});
-
-  /// Selected contract index
-  final int? index;
-
-  @override
-  String toString() => 'SelectContract index: $index';
-}
-
-///Fetch Available Contracts
-class FetchAvailableContracts extends AvailableContractsState {
-  /// Initializes
-  const FetchAvailableContracts({this.activeSymbol});
-
-  /// Fetch contract for this symbol
-  final ActiveSymbol? activeSymbol;
-
-  @override
-  String toString() => 'FetchAvailableContracts';
 }

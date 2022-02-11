@@ -18,14 +18,9 @@ class DerivGoApp extends StatefulWidget {
 class _DerivGoAppState extends State<DerivGoApp> {
   late conn_cubit.ConnectionCubit _connectionCubit;
 
-  // late BaseAPI? api;
-
   @override
   void initState() {
     super.initState();
-
-    /*APIInitializer().initialize();
-    api = Injector.getInjector().get<BaseAPI>();*/
 
     final ConnectionInformation connectionInfo = ConnectionInformation(
       appId: '1089',
@@ -34,19 +29,6 @@ class _DerivGoAppState extends State<DerivGoApp> {
     );
 
     _connectionCubit = conn_cubit.ConnectionCubit(connectionInfo);
-
-    /*api?.connect(
-      connectionInfo,
-      onDone: (_) {
-        print('Connection done');
-      },
-      onOpen: (_) {
-        print('Connection open');
-      },
-      onError: (_) {
-        print('Connection error');
-      },
-    );*/
   }
 
   @override

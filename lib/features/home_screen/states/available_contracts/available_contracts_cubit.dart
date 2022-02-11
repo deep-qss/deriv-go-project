@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 
 part 'available_contracts_state.dart';
 
-/// AvailableContractsCubit
+/// To manage available contracts
 class AvailableContractsCubit extends Cubit<AvailableContractsState> {
   ///initializer
   AvailableContractsCubit(ActiveSymbolCubit activeSymbolCubit)
@@ -18,92 +18,26 @@ class AvailableContractsCubit extends Cubit<AvailableContractsState> {
       if (activeSymbolState is ActiveSymbolLoaded) {
         final ActiveSymbol? symbol = activeSymbolState.selectedSymbol;
         if (symbol != null) {
-          loadContractsList(symbol);
+          _loadContractsList(symbol);
         }
       }
     });
   }
 
   /// fetch available contracts
-  Future<ContractsForSymbol> fetchAvailableContracts(
-          ActiveSymbol? activeSymbol) async =>
+  /// [symbol] To fetch available contracts for specified symbol
+  Future<ContractsForSymbol> _fetchAvailableContracts(
+          ActiveSymbol? symbol) async =>
       ContractsForSymbol.fetchContractsForSymbol(
-          ContractsForRequest(contractsFor: activeSymbol?.symbol));
+          ContractsForRequest(contractsFor: symbol?.symbol));
 
-  /// load contracts list
-  Future<void> loadContractsList(ActiveSymbol? activeSymbol) async {
+  Future<void> _loadContractsList(ActiveSymbol? activeSymbol) async {
     try {
       final ContractsForSymbol contracts =
-          await fetchAvailableContracts(activeSymbol);
+          await _fetchAvailableContracts(activeSymbol);
       emit(AvailableContractsLoaded(contracts: contracts));
     } on ContractsForSymbolException catch (e) {
       emit(AvailableContractsError(message: e.message));
     }
   }
-
-  /*AvailableContractsCubit(ActiveSymbolCubit? activeSymbolCubit)
-      : super(AvailableContractsLoading()) {
-    activeSymbolCubit?.stream.listen((ActiveSymbolState event) {
-      if (event is ActiveSymbolLoaded) {
-        emit(FetchAvailableContracts(activeSymbol: event.selectedSymbol));
-      }
-    });
-  }
-
-  Future<ContractsForSymbol?> _fetchAvailableContracts(
-    ActiveSymbol? selectedSymbol,
-  ) async =>
-      ContractsForSymbol.fetchContractsForSymbol(
-        ContractsForRequest(contractsFor: selectedSymbol?.symbol),
-      );
-
-  /// load contracts
-
-  Future<void> loadAvailableContracts(
-      AvailableContractsState availableContractsState) async {
-    if (availableContractsState is FetchAvailableContracts) {
-      try {
-        final ContractsForSymbol? contracts = await _fetchAvailableContracts(
-            availableContractsState.activeSymbol);
-
-        print('contracts for symbol');
-
-        emit(AvailableContractsLoaded(contracts: contracts));
-      } on ContractsForSymbolException catch (error) {
-        emit(AvailableContractsError(message: error.message));
-      }
-    }
-  }*/
-
-/*  ///
-  Future<void> mapEventToState(
-    AvailableContractsState availableContractsState,
-  ) async {
-    if (availableContractsState is FetchAvailableContracts) {
-      emit(AvailableContractsLoading());
-
-      try {
-        final ContractsForSymbol? contracts = await _fetchAvailableContracts(
-            availableContractsState.activeSymbol);
-
-        emit(AvailableContractsLoaded(contracts: contracts));
-      } on ContractsForSymbolException catch (error) {
-        emit(AvailableContractsError(message: error.message));
-      }
-    } else if (availableContractsState is SelectContract) {
-      if (state is AvailableContractsLoaded) {
-        final AvailableContractsLoaded loadedState =
-            state as AvailableContractsLoaded;
-
-        emit(AvailableContractsLoaded(
-          contracts: loadedState.contracts,
-          selectedContract: loadedState.contracts?.availableContracts
-              ?.elementAt(availableContractsState.index!.toInt()),
-        ));
-      } else {
-        emit(AvailableContractsLoading());
-        //add(_fetchAvailableContracts());
-      }
-    }
-  }*/
 }

@@ -12,17 +12,13 @@ class Symbols extends StatelessWidget {
         builder: (BuildContext context, dynamic state) {
           switch (state.runtimeType) {
             case ActiveSymbolLoading:
-              //TODO: Show loader
-              return Container();
+              return const CircularProgressIndicator();
+            case ActiveSymbolError:
+              return const Text('Error Occurred');
             case ActiveSymbolLoaded:
               final ActiveSymbolLoaded thisState = state;
-              /*final AvailableContractsCubit availableContracts =
-                  context.read<AvailableContractsCubit>();
-
-              availableContracts.loadContractsList(thisState.selectedSymbol);*/
-
               return Container(
-                height: 100,
+                height: 50,
                 child: Card(
                   child: BlocBuilder<ActiveSymbolCubit, ActiveSymbolState>(
                     builder: (BuildContext context, ActiveSymbolState state) =>
