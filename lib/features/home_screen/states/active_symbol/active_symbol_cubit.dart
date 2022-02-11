@@ -38,7 +38,7 @@ class ActiveSymbolCubit extends Cubit<ActiveSymbolState> {
         selectedSymbol: loadedState.activeSymbols![index],
       ));
     } else {
-      emit(const ActiveSymbolInitial());
+      emit(ActiveSymbolLoading());
     }
   }
 }

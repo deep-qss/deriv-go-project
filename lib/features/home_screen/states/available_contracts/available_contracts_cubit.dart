@@ -12,24 +12,32 @@ part 'available_contracts_state.dart';
 /// AvailableContractsCubit
 class AvailableContractsCubit extends Cubit<AvailableContractsState> {
   ///initializer
-  AvailableContractsCubit([ActiveSymbolCubit? activeSymbolCubit])
-      : super(AvailableContractsLoading());
+  AvailableContractsCubit(ActiveSymbolCubit activeSymbolCubit)
+      : super(AvailableContractsLoading()) {
+    activeSymbolCubit.stream.listen((ActiveSymbolState activeSymbolState) {
+      if (activeSymbolState is ActiveSymbolLoaded) {
+        final ActiveSymbol? symbol = activeSymbolState.selectedSymbol;
+        if (symbol != null) {
+          loadContractsList(symbol);
+        }
+      }
+    });
+  }
 
   /// fetch available contracts
   Future<ContractsForSymbol> fetchAvailableContracts(
           ActiveSymbol? activeSymbol) async =>
-      await ContractsForSymbol.fetchContractsForSymbol(
+      ContractsForSymbol.fetchContractsForSymbol(
           ContractsForRequest(contractsFor: activeSymbol?.symbol));
 
   /// load contracts list
-  Future<void> loadContractsList(
-      AvailableContractsState availableContractsState) async {
-    if (availableContractsState is FetchAvailableContracts) {
+  Future<void> loadContractsList(ActiveSymbol? activeSymbol) async {
+    try {
       final ContractsForSymbol contracts =
-          await fetchAvailableContracts(availableContractsState.activeSymbol);
+          await fetchAvailableContracts(activeSymbol);
       emit(AvailableContractsLoaded(contracts: contracts));
-    } else {
-      throw ContractsForSymbolException();
+    } on ContractsForSymbolException catch (e) {
+      emit(AvailableContractsError(message: e.message));
     }
   }
 

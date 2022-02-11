@@ -83,43 +83,76 @@ class _DataWidgetState extends State<DataWidget> {
 }
 */
 import 'package:deriv_go/features/home_screen/states/active_symbol/active_symbol_cubit.dart';
+import 'package:deriv_go/features/home_screen/states/tick/tick_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 ///
-class DataWidget extends StatelessWidget {
+class DataWidget extends StatefulWidget {
   ///
-  const DataWidget({Key? key}) : super(key: key);
+  const DataWidget({required this.activeSymbolCubit, Key? key})
+      : super(key: key);
+
+  final ActiveSymbolCubit activeSymbolCubit;
+
+  @override
+  State<DataWidget> createState() => _DataWidgetState();
+}
+
+class _DataWidgetState extends State<DataWidget> {
+  late TickCubit _tickCubit;
 
   ///
 
   @override
+  void initState() {
+    super.initState();
+
+    _tickCubit = TickCubit(widget.activeSymbolCubit);
+  }
+
+  @override
   Widget build(BuildContext context) => Container(
-        height: 200,
-        child: Card(
-          child: BlocBuilder<ActiveSymbolCubit, ActiveSymbolState>(
-              builder: (BuildContext context, ActiveSymbolState state) {
-            switch (state.runtimeType) {
-              case ActiveSymbolLoading:
-                return const Center();
-              case ActiveSymbolLoaded:
-                final ActiveSymbolLoaded thisState =
-                    state as ActiveSymbolLoaded;
-                return BlocBuilder<ActiveSymbolCubit, ActiveSymbolState>(
-                  builder: (BuildContext context, ActiveSymbolState state) =>
-                      Column(
-                    children: <Widget>[
-                      Text('Symbol Name : ${thisState.selectedSymbol?.symbol}'),
-                      Text(
-                        'Price: ${thisState.selectedSymbol?.intradayIntervalMinutes}',
-                      ),
-                    ],
-                  ),
-                );
-              default:
-                return Container();
-            }
-          }),
+        color: Colors.blueGrey.shade100,
+        child: Column(
+          children: <Widget>[
+            BlocBuilder<ActiveSymbolCubit, ActiveSymbolState>(
+                builder: (BuildContext context, ActiveSymbolState state) {
+              switch (state.runtimeType) {
+                case ActiveSymbolLoading:
+                  return const Center();
+                case ActiveSymbolLoaded:
+                  final ActiveSymbolLoaded thisState =
+                      state as ActiveSymbolLoaded;
+                  return BlocBuilder<ActiveSymbolCubit, ActiveSymbolState>(
+                    builder: (BuildContext context, ActiveSymbolState state) =>
+                        Text(
+                      'Symbol Name : ${thisState.selectedSymbol?.symbol}',
+                    ),
+                  );
+                default:
+                  return Container();
+              }
+            }),
+            BlocProvider<TickCubit>.value(
+              value: _tickCubit,
+              child: BlocBuilder<TickCubit, TickState>(
+                builder: (BuildContext context, TickState state) {
+                  switch (state.runtimeType) {
+                    case TicksLoading:
+                      return Container();
+                    case TicksLoaded:
+                      final TicksLoaded thisState = state as TicksLoaded;
+                      return Text(
+                        'Price: ${thisState.tick?.ask?.toStringAsFixed(5) ?? 0}',
+                      );
+                    default:
+                      return Container();
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       );
 }

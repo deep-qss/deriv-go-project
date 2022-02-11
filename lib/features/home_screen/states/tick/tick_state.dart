@@ -7,12 +7,6 @@ abstract class TickState {
   const TickState();
 }
 
-///
-class TickInitial extends TickState {
-  ///
-  const TickInitial();
-}
-
 /// TicksLoading
 class TicksLoading extends TickState {
   @override
@@ -53,16 +47,4 @@ class YieldTick extends TickState {
 
   @override
   String toString() => 'YieldTicks $tick';
-}
-
-/// tick subscribe
-class SubscribeTicks extends TickState {
-  /// Initializes
-  const SubscribeTicks({this.selectedSymbol});
-
-  /// Selected symbol
-  final ActiveSymbol? selectedSymbol;
-
-  @override
-  String toString() => 'SubscribeTicks';
 }

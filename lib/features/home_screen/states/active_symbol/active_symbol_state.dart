@@ -7,12 +7,6 @@ abstract class ActiveSymbolState {
   const ActiveSymbolState();
 }
 
-///active symbol
-class ActiveSymbolInitial extends ActiveSymbolState {
-  /// Initializes
-  const ActiveSymbolInitial();
-}
-
 ///State when loading the active symbols
 class ActiveSymbolLoading extends ActiveSymbolState {
   @override
